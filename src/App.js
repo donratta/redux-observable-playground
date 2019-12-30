@@ -1,26 +1,49 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+// import Users from './components/Users';
+// import Stories from './components/Stories';
+import {Search} from './components/Search';
+import {Beers} from './components/Beers';
+import { connect } from 'react-redux';
+import { searchBeers, cancelSearch } from './actions'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// function App() {
+//   return (
+//     <div className="App">
+//      {/* <Users /> */}
+//      {/* <Stories/> */}
+//      <Search
+//         defaultValue={''}
+//         onChange={this.handleBeerSearch}
+//         messages={this.props.messages}
+//         loading={this.props.loading}
+//         cancel={this.props.cancelSearch}
+//       />
+//       <Beers beers={this.props.beers} loading={this.props.loading}/>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+class App extends React.Component {
+  handleBeerSearch = (query) => {
+    this.props.searchBeers(query);
+  };
+  render() {
+    return (
+      <div className="App">
+        <Search
+          defaultValue={''}
+          onChange={this.handleBeerSearch}
+          messages={this.props.messages}
+          loading={this.props.loading}
+          cancel={this.props.cancelSearch}
+        />
+        <Beers beers={this.props.beers} loading={this.props.loading}/>
+      </div>
+    );
+  }
 }
 
-export default App;
+export default connect((state) => state, {searchBeers, cancelSearch})(App);
